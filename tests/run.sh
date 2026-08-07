@@ -53,6 +53,7 @@ assert_exit "problems exit non-zero" 1 -- $PA --passwd "$T/passwd" --shadow "$T/
 echo "== shadow risks =="
 assert "empty shadow password CRIT" "passwordless login"        -- $PA --passwd "$T/passwd" --shadow "$T/shadow" --no-color
 assert "MD5 hash is weak"           "weak MD5-crypt"            -- $PA --passwd "$T/passwd" --shadow "$T/shadow" --no-color
+assert "missing delegated shadow record flagged" "no shadow record exists" -- $PA --passwd "$T/passwd" --shadow "$T/shadow" --no-color
 
 echo "== a clean account database passes =="
 cat > "$T/pgood" <<'EOF'

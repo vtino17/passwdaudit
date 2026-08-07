@@ -103,6 +103,13 @@ def audit(passwd_rows: list[list[str]], shadow: dict[str, str] | None) -> list[F
     if shadow is None:
         out.append(Finding("INFO", "shadow not read (needs root); password-hash checks skipped"))
     else:
+        passwd_names = {row[0] for row in passwd_rows}
+        for row in passwd_rows:
+            name, pw = row[0], row[1]
+            if pw == "x" and name not in shadow:
+                out.append(Finding("HIGH", f"{name}: passwd delegates to shadow but no shadow record exists"))
+        for name in sorted(set(shadow) - passwd_names):
+            out.append(Finding("MEDIUM", f"{name}: orphaned shadow record has no passwd account"))
         for name, h in shadow.items():
             if h == "":
                 out.append(Finding("CRITICAL", f"{name}: empty password in shadow (passwordless login)"))
