@@ -19,8 +19,9 @@ import os
 import sys
 
 # login shells that mean "this account cannot log in interactively"
-NOLOGIN_SHELLS = {"", "/usr/sbin/nologin", "/sbin/nologin", "/bin/false",
-                  "/usr/bin/false", "/bin/sync", "/dev/null"}
+NOLOGIN_SHELLS = {"", "/usr/sbin/nologin", "/sbin/nologin", "/bin/nologin",
+                  "/usr/bin/nologin", "/bin/false", "/usr/bin/false",
+                  "/bin/sync", "/dev/null"}
 
 # shadow hash prefixes -> (label, ok?)
 HASH_INFO = {
